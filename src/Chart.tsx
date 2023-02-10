@@ -31,6 +31,8 @@ type Props = {
   disableGestures?: boolean
   /** Padding of the chart. Use this instead of setting padding in the `style` prop. */
   padding?: Padding
+  /** Disable touch event handler **/
+  disableTouchEvent?: boolean
 }
 
 export type ChartHandle = {
@@ -135,7 +137,7 @@ const Chart: React.FC<Props> = React.memo(
       useNativeDriver: true,
       listener: (evt) => {
         // Necessary to debounce function, see https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6
-        if (evt.nativeEvent.state === State.ACTIVE) {
+        if (evt.nativeEvent.state === State.ACTIVE && !props.disableTouchEvent) {
           handleTouchEvent(evt.nativeEvent.x, evt.nativeEvent.y)
         }
       },
